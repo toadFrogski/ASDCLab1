@@ -1,3 +1,5 @@
+from functools import reduce
+import math
 from src.services.timer import timer
 
 
@@ -9,7 +11,6 @@ class ListSearch():
             if item.__dict__[field] == value:
                 return item
         return
-
 
     @timer
     def binary_search(items, field, value):
@@ -23,7 +24,6 @@ class ListSearch():
                 high = mid - 1
             mid = (low + high) // 2
         return items[mid] if low <= high else None
-
 
     @timer
     def fibbonachi_search(items, field, value):
@@ -65,20 +65,78 @@ class ListSearch():
                 p = p - q
                 q = q - p
 
+    @timer
+    def interpolar_search(items, field, value):
+
+        def num_interpolar(items, field, value):
+            low, high = 0, len(items) - 1
+            ilow = items[low].__dict__[field]
+            ihigh = items[high].__dict__[field]
+            while ilow < value and ihigh > value:
+                if ihigh == ilow:
+                    break
+                mid = math.floor(low + ((value - ilow) * (high - low)) / (ihigh - ilow))
+                imid = items[mid].__dict__[field]
+                if imid < value:
+                    low = mid + 1
+                    ilow = items[low].__dict__[field]
+                elif imid > value:
+                    high = mid - 1
+                    ihigh = items[high].__dict__[field]
+                else:
+                    return mid
+
+            if ilow == value:
+                return items[low]
+            if ihigh == value:
+                return items[high]
+
+        def str_to_int(string):
+            return reduce(lambda x, y: x + y, [ord(char) for char in string])
+
+        def str_interpolar(items, field, value):
+            low, high = 0, len(items) - 1
+            ilow = str_to_int(items[low].__dict__[field])
+            ihigh = str_to_int(items[high].__dict__[field])
+            value = str_to_int(value)
+            while ilow < value and ihigh > value:
+                if ihigh == ilow:
+                    break
+                mid = math.floor(low + ((value - ilow) * (high - low)) / (ihigh - ilow))
+                imid=str_to_int(items[mid].__dict__[field])
+                if imid < value:
+                    low=mid + 1
+                    ilow=str_to_int(items[low].__dict__[field])
+                elif imid > value:
+                    high=mid - 1
+                    ihigh=str_to_int(items[high].__dict__[field])
+                else:
+                    return items[mid]
+
+            if ilow == value:
+                return items[low]
+            if ihigh == value:
+                return items[high]
+
+        if isinstance(items[0].__dict__[field], str):
+            return str_interpolar(items, field, value)
+        else:
+            return num_interpolar(items, field, value)
+
 
 class TreeSearch:
 
-    @timer
+    @ timer
     def recursive_tree_search(root, value):
-        result = None
+        result=None
         if root:
             if root.value == value:
                 return root
-            result = TreeSearch.recursive_tree_search(root.left, value)
-            result = TreeSearch.recursive_tree_search(root.right, value)
+            result=TreeSearch.recursive_tree_search(root.left, value)
+            result=TreeSearch.recursive_tree_search(root.right, value)
         return result
 
-    @timer
+    @ timer
     def bintree_linear_search(root, value):
         if value < root.value:
             return TreeSearch.bintree_linear_search(root.left, value)
