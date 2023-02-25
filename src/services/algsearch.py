@@ -128,7 +128,7 @@ class ListSearch():
 
 class TreeSearch:
 
-    @ timer
+    @timer
     def recursive_tree_search(root, value):
 
         def find(root, value):
@@ -142,7 +142,7 @@ class TreeSearch:
         find(root, value)
         return result[0] if len(result) else None
 
-    @ timer
+    @timer
     def binary_tree_search(root, value):
 
         def find(root, value):
