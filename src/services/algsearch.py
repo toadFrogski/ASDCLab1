@@ -75,7 +75,8 @@ class ListSearch():
             while ilow < value and ihigh > value:
                 if ihigh == ilow:
                     break
-                mid = math.floor(low + ((value - ilow) * (high - low)) / (ihigh - ilow))
+                mid = math.floor(
+                    low + ((value - ilow) * (high - low)) / (ihigh - ilow))
                 imid = getattr(items[mid], field)
                 if imid < value:
                     low = mid + 1
@@ -102,14 +103,15 @@ class ListSearch():
             while ilow < value and ihigh > value:
                 if ihigh == ilow:
                     break
-                mid = math.floor(low + ((value - ilow) * (high - low)) / (ihigh - ilow))
-                imid=str_to_int(getattr(items[mid], field))
+                mid = math.floor(
+                    low + ((value - ilow) * (high - low)) / (ihigh - ilow))
+                imid = str_to_int(getattr(items[mid], field))
                 if imid < value:
-                    low=mid + 1
-                    ilow=str_to_int(getattr(items[low], field))
+                    low = mid + 1
+                    ilow = str_to_int(getattr(items[low], field))
                 elif imid > value:
-                    high=mid - 1
-                    ihigh=str_to_int(getattr(items[high], field))
+                    high = mid - 1
+                    ihigh = str_to_int(getattr(items[high], field))
                 else:
                     return items[mid]
 
@@ -128,19 +130,26 @@ class TreeSearch:
 
     @ timer
     def recursive_tree_search(root, value):
-        result=None
-        if root:
-            if root.value == value:
-                return root
-            result=TreeSearch.recursive_tree_search(root.left, value)
-            result=TreeSearch.recursive_tree_search(root.right, value)
-        return result
+
+        def find(root, value):
+            if root:
+                if root.value == value:
+                    result.append(root)
+                find(root.left, value)
+                find(root.right, value)
+
+        result = []
+        find(root, value)
+        return result[0] if len(result) else None
 
     @ timer
-    def bintree_linear_search(root, value):
-        if value < root.value:
-            return TreeSearch.bintree_linear_search(root.left, value)
-        elif value > root.value:
-            return TreeSearch.bintree_linear_search(root.right, value)
-        elif value == root.value:
-            return root
+    def binary_tree_search(root, value):
+
+        def find(root, value):
+            if value < root.value:
+                find(root.left, value)
+            elif value > root.value:
+                find(root.right, value)
+            elif value == root.value:
+                return root
+        return find(root, value)

@@ -9,15 +9,15 @@ def lab1():
     students = [Student().read(student) for student in StudentSerializer.serialize('./data/students.json')]
 
     tree = Tree()
-    [tree.insert(student.__dict__['name']) for student in students]
+    [tree.insert(student.name) for student in students]
 
-    ListSearch.lineal_search(students, 'name', 'Alva Bauser')
+    ListSearch.lineal_search(students, 'name', 'Efrem Reiglar')
     students.sort(key=lambda item: item.name)
-    ListSearch.lineal_search(students, 'name', 'Alva Bauser')
-    ListSearch.binary_search(students, 'name', 'Alva Bauser')
-    ListSearch.fibbonachi_search(students, 'name', 'Alva Bauser')
+    ListSearch.lineal_search(students, 'name', 'Efrem Reiglar')
+    ListSearch.binary_search(students, 'name', 'Efrem Reiglar')
+    ListSearch.fibbonachi_search(students, 'name', 'Efrem Reiglar')
     students.sort(key=lambda item: reduce(lambda x, y: x + y, [ord(char) for char in item.name]))
-    ListSearch.interpolar_search(students, 'name', 'Alva Bauser')
-    TreeSearch.bintree_linear_search(tree, 'Alva Bauser')
-    TreeSearch.recursive_tree_search(tree, 'Alva Bauser')
+    ListSearch.interpolar_search(students, 'name', 'Efrem Reiglar')
+    TreeSearch.binary_tree_search(tree, 'Efrem Reiglar')
+    TreeSearch.recursive_tree_search(tree, 'Efrem Reiglar')
 
