@@ -1,21 +1,15 @@
-import json
-from src.classes.student import Student
+from functools import reduce
+from src.classes.student import Student, StudentSerializer
 from src.classes.tree import Tree
 from src.services.algsearch import ListSearch, TreeSearch
-from functools import reduce
 
 
 def lab1():
 
-    students = []
-    with open('data/students.json', 'r') as f:
-        for item in json.load(f):
-            student = Student()
-            students.append(student.read(item))
+    students = [Student().read(student) for student in StudentSerializer.serialize('./data/students.json')]
 
     tree = Tree()
-    for student in students:
-        tree.insert(student.__dict__['name'])
+    [tree.insert(student.__dict__['name']) for student in students]
 
     ListSearch.lineal_search(students, 'name', 'Alva Bauser')
     students.sort(key=lambda item: item.name)

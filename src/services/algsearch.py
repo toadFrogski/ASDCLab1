@@ -1,5 +1,5 @@
-from functools import reduce
 import math
+from functools import reduce
 from src.services.timer import timer
 
 
@@ -8,7 +8,7 @@ class ListSearch():
     @timer
     def lineal_search(items, field, value):
         for item in items:
-            if item.__dict__[field] == value:
+            if getattr(item, field) == value:
                 return item
         return
 
@@ -17,8 +17,8 @@ class ListSearch():
         low = 0
         high = len(items) - 1
         mid = high - low // 2
-        while items[mid].__dict__[field] != value and low <= high:
-            if value > items[mid].__dict__[field]:
+        while getattr(items[mid], field) != value and low <= high:
+            if value > getattr(items[mid], field):
                 low = mid + 1
             else:
                 high = mid - 1
@@ -51,14 +51,14 @@ class ListSearch():
                 i = i + p
                 p = p - q
                 q = q - p
-            elif items[i].__dict__[field] == value:
+            elif getattr(items[i], field) == value:
                 return items[i]
-            elif value < items[i].__dict__[field]:
+            elif value < getattr(items[i], field):
                 if q == 0:
                     return
                 i = i - q
                 p, q = q, p - q
-            elif value > items[i].__dict__[field]:
+            elif value > getattr(items[i], field):
                 if p == 1:
                     return
                 i = i + p
@@ -70,19 +70,19 @@ class ListSearch():
 
         def num_interpolar(items, field, value):
             low, high = 0, len(items) - 1
-            ilow = items[low].__dict__[field]
-            ihigh = items[high].__dict__[field]
+            ilow = getattr(items[low], field)
+            ihigh = getattr(items[high], field)
             while ilow < value and ihigh > value:
                 if ihigh == ilow:
                     break
                 mid = math.floor(low + ((value - ilow) * (high - low)) / (ihigh - ilow))
-                imid = items[mid].__dict__[field]
+                imid = getattr(items[mid], field)
                 if imid < value:
                     low = mid + 1
-                    ilow = items[low].__dict__[field]
+                    ilow = getattr(items[low], field)
                 elif imid > value:
                     high = mid - 1
-                    ihigh = items[high].__dict__[field]
+                    ihigh = getattr(items[high], field)
                 else:
                     return mid
 
@@ -96,20 +96,20 @@ class ListSearch():
 
         def str_interpolar(items, field, value):
             low, high = 0, len(items) - 1
-            ilow = str_to_int(items[low].__dict__[field])
-            ihigh = str_to_int(items[high].__dict__[field])
+            ilow = str_to_int(getattr(items[low], field))
+            ihigh = str_to_int(getattr(items[high], field))
             value = str_to_int(value)
             while ilow < value and ihigh > value:
                 if ihigh == ilow:
                     break
                 mid = math.floor(low + ((value - ilow) * (high - low)) / (ihigh - ilow))
-                imid=str_to_int(items[mid].__dict__[field])
+                imid=str_to_int(getattr(items[mid], field))
                 if imid < value:
                     low=mid + 1
-                    ilow=str_to_int(items[low].__dict__[field])
+                    ilow=str_to_int(getattr(items[low], field))
                 elif imid > value:
                     high=mid - 1
-                    ihigh=str_to_int(items[high].__dict__[field])
+                    ihigh=str_to_int(getattr(items[high], field))
                 else:
                     return items[mid]
 
@@ -118,7 +118,7 @@ class ListSearch():
             if ihigh == value:
                 return items[high]
 
-        if isinstance(items[0].__dict__[field], str):
+        if isinstance(getattr(items[0], field), str):
             return str_interpolar(items, field, value)
         else:
             return num_interpolar(items, field, value)
