@@ -2,11 +2,37 @@ import math
 from functools import reduce
 from src.services.timer import timer
 
-
 class ListSearch():
+    """
+    'ListSearch' class contains the list search methods needed for the lab work
+
+    Methods
+    -------
+        * lineal_search
+        * binary_search
+        * fibbonachi_search
+        * interpolar_search
+    """
 
     @timer
     def lineal_search(items, field, value):
+        """
+        The function implements a linear search algorithm 
+
+        Parameters
+        ----------
+        items: Student[]
+            List that contains student objects 
+        field: String
+            Name of attribute we want to find
+        value: Any
+            Value of attribute we want to find
+
+
+        Return
+        ------
+        Student | None
+        """
         for item in items:
             if getattr(item, field) == value:
                 return item
@@ -14,6 +40,22 @@ class ListSearch():
 
     @timer
     def binary_search(items, field, value):
+        """
+        The function implements a binary search algorithm 
+
+        Parameters
+        ----------
+        items: Student[]
+            List that contains student objects 
+        field: String
+            Name of attribute we want to find
+        value: Any
+            Value of attribute we want to find
+
+        Return
+        ------
+        Student | None
+        """
         low = 0
         high = len(items) - 1
         mid = high - low // 2
@@ -27,7 +69,22 @@ class ListSearch():
 
     @timer
     def fibbonachi_search(items, field, value):
+        """
+        The function implements a fibbonachi search algorithm 
 
+        Parameters
+        ----------
+        items: Student[]
+            List that contains student objects 
+        field: String
+            Name of attribute we want to find
+        value: Any
+            Value of attribute we want to find
+
+        Return
+        ------
+        Student | None
+        """
         fibs = [0, 1, 1]
         while True:
             fib = fibs[-1] + fibs[-2]
@@ -67,6 +124,22 @@ class ListSearch():
 
     @timer
     def interpolar_search(items, field, value):
+        """
+        The function implements a interpolar search algorithm 
+
+        Parameters
+        ----------
+        items: Student[]
+            List that contains student objects 
+        field: String
+            Name of attribute we want to find
+        value: Any
+            Value of attribute we want to find
+
+        Return
+        ------
+        Student | None
+        """
 
         def num_interpolar(items, field, value):
             low, high = 0, len(items) - 1
@@ -127,9 +200,30 @@ class ListSearch():
 
 
 class TreeSearch:
+    """
+    'TreeSearch' class contains the binary tree search methods needed for the lab work
 
+    Methods
+    -------
+        * recursive_tree_search
+        * binary_tree_search
+    """
     @timer
     def recursive_tree_search(root, value):
+        """
+        The function implements a recursive tree search algorithm 
+
+        Parameters
+        ----------
+        root: Tree
+            'Tree' object 
+        value: Any
+            Value of attribute we want to find
+
+        Return
+        ------
+        Any | None
+        """
 
         def find(root, value):
             if root:
@@ -144,6 +238,20 @@ class TreeSearch:
 
     @timer
     def binary_tree_search(root, value):
+        """
+        The function implements a binary tree search algorithm 
+
+        Parameters
+        ----------
+        root: Tree
+            'Tree' object 
+        value: Any
+            Value of attribute we want to find
+
+        Return
+        ------
+        Any | None
+        """
 
         def find(root, value):
             if value < root.value:

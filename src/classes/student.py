@@ -3,8 +3,8 @@ import csv
 from enum import Enum
 from typing import Self
 
-
 class Student():
+    """ 'Student' class is an entity to describe the data over the student """
 
     class Department(Enum):
         BUISNESS = 0
@@ -43,8 +43,8 @@ class Student():
     def __str__(self):
         return f"id: {self.id}, 'name': {self.name}, 'department: {self.Department(self.department).name}, 'birthday': {self.birthday}, 'admission': {self.admission}"
 
-
 class StudentSerializer:
+    """'StudentSerializer' class serves to serialize data from different formats of student data into the dictionary"""
 
     @staticmethod
     def serialize(file, format=None, options: dict[str, str] | None = {}):

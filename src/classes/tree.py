@@ -1,5 +1,6 @@
 
 class Tree:
+    """ 'Tree' class implements a binary tree structure """
     def __init__(self, value=None, left=None, right=None) -> None:
         self.value = value
         self.left = left
